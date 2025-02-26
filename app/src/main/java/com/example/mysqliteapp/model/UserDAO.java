@@ -12,18 +12,32 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+/**
+ * Clase UserDAO que maneja las operaciones de base de datos relacionadas con la entidad User.
+ * Se comunica con la base de datos mediante ManagerDBUser.
+ */
 public class UserDAO {
-    private ManagerDBUser dbUser;
-    private Context context;
-    private View view;
+    private ManagerDBUser dbUser; // Instancia del gestor de base de datos
+    private Context context; // Contexto de la aplicación
+    private View view; // Vista para mostrar mensajes mediante Snackbar
 
+    /**
+     * Constructor de la clase UserDAO.
+     *
+     * @param context Contexto de la aplicación
+     * @param view Vista de la interfaz para mostrar mensajes
+     */
     public UserDAO(Context context, View view) {
         this.context = context;
         this.view = view;
         this.dbUser = new ManagerDBUser(context);
     }
 
-    // Método privado para insertar un usuario
+    /**
+     * Método privado para insertar un usuario en la base de datos.
+     *
+     * @param user Objeto User con los datos del usuario a registrar
+     */
     private void insertUser(User user) {
         SQLiteDatabase sqLiteDatabase = null;
         try {
@@ -33,7 +47,7 @@ public class UserDAO {
             values.put("use_names", user.getFirstName());
             values.put("use_last_names", user.getLastName());
             values.put("use_user", user.getUsername());
-            values.put("use_password", user.getPasswordHash()); // Guardamos la contraseña ya en hash
+            values.put("use_password", user.getPasswordHash()); // Contraseña ya en hash
             values.put("use_status", 1); // Estado activo por defecto
 
             long response = sqLiteDatabase.insert("users", null, values);
@@ -50,12 +64,20 @@ public class UserDAO {
         }
     }
 
-    // Método público para insertar un usuario
+    /**
+     * Método público que permite insertar un usuario en la base de datos.
+     *
+     * @param user Objeto User a insertar
+     */
     public void getInsertUser(User user) {
         insertUser(user);
     }
 
-    // Método para obtener todos los usuarios activos
+    /**
+     * Método para obtener la lista de todos los usuarios activos.
+     *
+     * @return Lista de usuarios activos en la base de datos
+     */
     public ArrayList<User> getUserList() {
         ArrayList<User> listUser = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = dbUser.getReadableDatabase();

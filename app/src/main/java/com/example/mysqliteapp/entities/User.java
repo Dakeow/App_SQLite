@@ -67,7 +67,7 @@ public class User {
         return Integer.toHexString(password.hashCode()); // No es seguro en producción, solo demostrativo
     }
 
-    // 5. toString mejorado sin exponer la contraseña
+    // 5. toString  sin exponer la contraseña
     @Override
     public String toString() {
         return "User{" +
